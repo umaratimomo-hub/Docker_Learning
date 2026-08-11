@@ -7,7 +7,7 @@
 
 - [Core Technologies](#core-technologies)
 - [Project Overview](#project-overview)
-- [What is a threat composer app?](#what-is-a-threat-composer-app)
+- [What is a Redis Visit Counter app?](#what-is-a-redis-visit-counter-app)
 - [Demo of the Application](#demo-of-the-application)
 - [How it works](#how-it-works)
 - [Achievements](#achievements)
@@ -30,7 +30,7 @@ This project aimed to demonstrate the deployment of
 
 ---
 
-### What is a threat composer app?
+### What is a Redis Visit Counter app?
 
 ---
 
