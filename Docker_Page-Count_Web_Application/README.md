@@ -1,5 +1,5 @@
 # End-to-end Visit Counter Web Application
-### Deployment of a threat composer web application via AWS using containerisation (Docker), IaC (Terraform), and CI/CD (Github Actions).
+### End-to-End deployment of a page counter application using Docker Compose, Nginx, Flask, and Redis (for volume persistence).
 
 ---
 
