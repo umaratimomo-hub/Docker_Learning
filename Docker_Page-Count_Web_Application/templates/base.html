@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        {% block title %}
+            Umar's DevOps Lab
+        {% endblock %}
+    </title>
+
+    <style>
+
+        @import url(
+            'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap'
+        );
+
+
+        /* =====================================================
+           ROOT
+        ===================================================== */
+
+        :root {
+            --bg: #070b14;
+            --surface: #0d1422;
+            --surface-light: #111b2e;
+
+            --border:
+                rgba(148, 163, 184, 0.12);
+
+            --text: #f8fafc;
+            --muted: #94a3b8;
+            --subtle: #64748b;
+
+            --purple: #8b5cf6;
+            --purple-light: #c4b5fd;
+            --blue: #38bdf8;
+            --green: #34d399;
+            --red: #f87171;
+        }
+
+
+        /* =====================================================
+           RESET
+        ===================================================== */
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+        body {
+
+            min-height: 100vh;
+
+            font-family:
+                "Inter",
+                sans-serif;
+
+            color:
+                var(--text);
+
+            background:
+
+                radial-gradient(
+                    circle at 15% 10%,
+                    rgba(139, 92, 246, 0.13),
+                    transparent 30%
+                ),
+
+                radial-gradient(
+                    circle at 85% 20%,
+                    rgba(56, 189, 248, 0.08),
+                    transparent 28%
+                ),
+
+                var(--bg);
+
+            overflow-x: hidden;
+        }
+
+
+        /* =====================================================
+           BACKGROUND GRID
+        ===================================================== */
+
+        body::before {
+
+            content: "";
+
+            position: fixed;
+
+            inset: 0;
+
+            pointer-events: none;
+
+            background-image:
+
+                linear-gradient(
+                    rgba(255,255,255,0.018) 1px,
+                    transparent 1px
+                ),
+
+                linear-gradient(
+                    90deg,
+                    rgba(255,255,255,0.018) 1px,
+                    transparent 1px
+                );
+
+            background-size: 60px 60px;
+
+            mask-image:
+                linear-gradient(
+                    to bottom,
+                    black,
+                    transparent 80%
+                );
+        }
+
+
+        /* =====================================================
+           PAGE CONTAINER
+        ===================================================== */
+
+        .page {
+
+            width:
+                min(1100px, calc(100% - 40px));
+
+            margin:
+                auto;
+        }
+
+
+        /* =====================================================
+           NAVIGATION
+        ===================================================== */
+
+        nav {
+
+            height: 74px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content:
+                space-between;
+
+            border-bottom:
+                1px solid var(--border);
+        }
+
+
+        .brand {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 11px;
+
+            color:
+                var(--text);
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            white-space: nowrap;
+        }
+
+
+        .brand-mark {
+
+            width: 34px;
+            height: 34px;
+
+            display: grid;
+
+            place-items: center;
+
+            border-radius: 10px;
+
+            background:
+
+                linear-gradient(
+                    135deg,
+                    var(--purple),
+                    #6366f1
+                );
+
+            box-shadow:
+
+                0 0 25px
+                rgba(139, 92, 246, 0.25);
+
+            font-size: 12px;
+        }
+
+
+        .nav-links {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 4px;
+        }
+
+
+        .nav-links a {
+
+            padding:
+                8px 10px;
+
+            border-radius: 7px;
+
+            color:
+                var(--subtle);
+
+            text-decoration: none;
+
+            /* Increased from 10px */
+            font-size: 11px;
+
+            font-weight: 500;
+
+            transition:
+                color 0.2s ease,
+                background 0.2s ease;
+        }
+
+
+        .nav-links a:hover {
+
+            color:
+                var(--text);
+
+            background:
+                rgba(255,255,255,0.04);
+        }
+
+
+        .nav-links a.active {
+
+            color:
+                var(--purple-light);
+
+            background:
+                rgba(139, 92, 246, 0.08);
+        }
+
+
+        .counter-link {
+
+            margin-left: 8px;
+
+            padding:
+                8px 13px !important;
+
+            border:
+                1px solid
+                rgba(139, 92, 246, 0.25);
+
+            color:
+                var(--purple-light) !important;
+
+            background:
+                rgba(139, 92, 246, 0.08);
+        }
+
+
+        .counter-link:hover {
+
+            border-color:
+                rgba(139, 92, 246, 0.45);
+
+            background:
+                rgba(139, 92, 246, 0.15)
+                !important;
+        }
+
+
+        /* =====================================================
+           MAIN
+        ===================================================== */
+
+        main {
+
+            min-height:
+                calc(100vh - 134px);
+        }
+
+
+        /* =====================================================
+           HERO
+        ===================================================== */
+
+        .hero-small {
+
+            /* Reduced vertical footprint */
+            padding:
+                62px 20px 36px;
+
+            text-align:
+                center;
+        }
+
+
+        .eyebrow {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            padding:
+                6px 12px;
+
+            margin-bottom:
+                18px;
+
+            border:
+                1px solid
+                rgba(139, 92, 246, 0.2);
+
+            border-radius:
+                999px;
+
+            background:
+                rgba(139, 92, 246, 0.07);
+
+            color:
+                var(--purple-light);
+
+            /* Increased */
+            font-size: 10px;
+
+            font-weight: 600;
+
+            letter-spacing:
+                1px;
+
+            text-transform:
+                uppercase;
+        }
+
+
+        .eyebrow-dot {
+
+            width: 5px;
+            height: 5px;
+
+            border-radius:
+                50%;
+
+            background:
+                var(--purple-light);
+
+            box-shadow:
+                0 0 8px
+                var(--purple-light);
+        }
+
+
+        h1 {
+
+            font-size:
+                clamp(38px, 5.5vw, 60px);
+
+            line-height:
+                0.98;
+
+            letter-spacing:
+                -3px;
+
+            margin-bottom:
+                18px;
+        }
+
+
+        .gradient {
+
+            background:
+
+                linear-gradient(
+                    110deg,
+                    #ffffff,
+                    var(--purple-light),
+                    #7dd3fc
+                );
+
+            -webkit-background-clip:
+                text;
+
+            background-clip:
+                text;
+
+            color:
+                transparent;
+        }
+
+
+        .lead {
+
+            max-width:
+                680px;
+
+            margin:
+                auto;
+
+            color:
+                var(--muted);
+
+            /* Increased */
+            font-size: 15px;
+
+            line-height:
+                1.65;
+        }
+
+
+        /* =====================================================
+           CONTENT
+        ===================================================== */
+
+        .content {
+
+            padding:
+                8px 0 45px;
+        }
+
+
+        /* =====================================================
+           CARDS
+        ===================================================== */
+
+        .cards {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 12px;
+        }
+
+
+        .card {
+
+            padding:
+                21px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                15px;
+
+            background:
+                rgba(15, 23, 42, 0.65);
+
+            backdrop-filter:
+                blur(15px);
+
+            transition:
+                transform 0.25s ease,
+                border-color 0.25s ease;
+        }
+
+
+        .card:hover {
+
+            transform:
+                translateY(-4px);
+
+            border-color:
+                rgba(139, 92, 246, 0.3);
+        }
+
+
+        .card-icon {
+
+            width: 40px;
+            height: 40px;
+
+            display: grid;
+
+            place-items: center;
+
+            margin-bottom:
+                14px;
+
+            border-radius:
+                11px;
+
+            background:
+                rgba(139, 92, 246, 0.1);
+
+            color:
+                var(--purple-light);
+
+            font-size: 13px;
+
+            font-weight: 700;
+        }
+
+
+        .card h2,
+        .card h3 {
+
+            margin-bottom:
+                8px;
+
+            /* Increased */
+            font-size: 15px;
+        }
+
+
+        .card p {
+
+            color:
+                var(--subtle);
+
+            /* Increased from 11px */
+            font-size: 13px;
+
+            line-height:
+                1.55;
+        }
+
+
+        /* =====================================================
+           FLOW
+        ===================================================== */
+
+        .flow {
+
+            max-width:
+                700px;
+
+            margin:
+                auto;
+        }
+
+
+        .flow-step {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 17px;
+
+            /* Reduced */
+            padding:
+                14px 18px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                12px;
+
+            background:
+                rgba(15, 23, 42, 0.6);
+
+            transition:
+                transform 0.2s ease,
+                border-color 0.2s ease;
+        }
+
+
+        .flow-step:hover {
+
+            transform:
+                translateX(3px);
+
+            border-color:
+                rgba(139, 92, 246, 0.25);
+        }
+
+
+        .flow-number {
+
+            flex-shrink: 0;
+
+            width: 34px;
+            height: 34px;
+
+            display: grid;
+
+            place-items: center;
+
+            border-radius:
+                9px;
+
+            background:
+                rgba(139, 92, 246, 0.1);
+
+            color:
+                var(--purple-light);
+
+            font-size: 10px;
+
+            font-weight: 700;
+        }
+
+
+        .flow-step h3 {
+
+            margin-bottom:
+                4px;
+
+            /* Increased */
+            font-size: 14px;
+        }
+
+
+        .flow-step p {
+
+            color:
+                var(--subtle);
+
+            /* Increased */
+            font-size: 12px;
+
+            line-height:
+                1.45;
+        }
+
+
+        .flow-arrow {
+
+            width: 1px;
+
+            height: 15px;
+
+            margin-left:
+                34px;
+
+            background:
+                rgba(139, 92, 246, 0.25);
+        }
+
+
+        /* =====================================================
+           CODE BLOCK
+        ===================================================== */
+
+        .code-block {
+
+            margin-top:
+                20px;
+
+            padding:
+                17px 20px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                12px;
+
+            background:
+                #050810;
+
+            overflow-x:
+                auto;
+
+            color:
+                #cbd5e1;
+
+            font-family:
+                "Courier New",
+                monospace;
+
+            font-size:
+                12px;
+
+            line-height:
+                1.6;
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        footer {
+
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            padding:
+                20px 0 25px;
+
+            border-top:
+                1px solid var(--border);
+
+            color:
+                #475569;
+
+            /* Increased */
+            font-size: 11px;
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 850px) {
+
+            .nav-links a {
+                display: none;
+            }
+
+            .nav-links .counter-link {
+                display: block;
+            }
+
+            .cards {
+                grid-template-columns:
+                    1fr;
+            }
+
+            .flow {
+                max-width:
+                    100%;
+            }
+        }
+
+
+        @media (max-width: 600px) {
+
+            .page {
+
+                width:
+                    calc(100% - 28px);
+            }
+
+
+            nav {
+
+                height:
+                    68px;
+            }
+
+
+            .hero-small {
+
+                padding:
+                    48px 10px 30px;
+            }
+
+
+            h1 {
+
+                font-size:
+                    clamp(36px, 10vw, 48px);
+
+                letter-spacing:
+                    -2px;
+            }
+
+
+            .lead {
+
+                font-size:
+                    14px;
+            }
+
+
+            footer {
+
+                flex-direction:
+                    column;
+
+                gap: 8px;
+
+                text-align:
+                    center;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <div class="page">
+
+
+        <!-- =================================================
+             NAVIGATION
+        ================================================= -->
+
+        <nav>
+
+            <a href="/" class="brand">
+
+                <div class="brand-mark">
+                    U
+                </div>
+
+                <span>
+                    Umar's DevOps Lab
+                </span>
+
+            </a>
+
+
+            <div class="nav-links">
+
+                <a
+                    href="/"
+                    class="{% if request.path == '/' %}active{% endif %}"
+                >
+                    Home
+                </a>
+
+
+                <a
+                    href="/project"
+                    class="{% if request.path == '/project' %}active{% endif %}"
+                >
+                    Project
+                </a>
+
+
+                <a
+                    href="/architecture"
+                    class="{% if request.path == '/architecture' %}active{% endif %}"
+                >
+                    Architecture
+                </a>
+
+
+                <a
+                    href="/how-it-works"
+                    class="{% if request.path == '/how-it-works' %}active{% endif %}"
+                >
+                    How It Works
+                </a>
+
+
+                <a
+                    href="/technology"
+                    class="{% if request.path == '/technology' %}active{% endif %}"
+                >
+                    Technology
+                </a>
+
+
+                <a
+                    href="/count"
+                    class="counter-link"
+                >
+                    Visitor Counter →
+                </a>
+
+
+                <a
+                    href="/future"
+                    class="{% if request.path == '/future' %}active{% endif %}"
+                >
+                    Future
+                </a>
+
+            </div>
+
+        </nav>
+
+
+        <!-- =================================================
+             PAGE CONTENT
+        ================================================= -->
+
+        <main>
+
+            {% block content %}
+
+            {% endblock %}
+
+        </main>
+
+
+        <!-- =================================================
+             FOOTER
+        ================================================= -->
+
+        <footer>
+
+            <span>
+                Umar's DevOps Lab
+            </span>
+
+            <span>
+                Flask · Redis · Docker
+            </span>
+
+        </footer>
+
+    </div>
+
+</body>
+
+</html>

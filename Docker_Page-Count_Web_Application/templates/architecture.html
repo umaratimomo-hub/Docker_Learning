@@ -1,0 +1,1120 @@
+{% extends "base.html" %}
+
+{% block title %}
+Architecture | Umar's DevOps Lab
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+    /* =====================================================
+       Architecture Page
+    ===================================================== */
+
+    .architecture-page {
+        min-height: calc(100vh - 140px);
+        padding-bottom: 25px;
+    }
+
+
+    /* =====================================================
+       Hero
+    ===================================================== */
+
+    .architecture-hero {
+        padding: 34px 20px 16px;
+        text-align: center;
+    }
+
+    .architecture-hero .eyebrow {
+        margin-bottom: 16px;
+    }
+
+    .architecture-hero h1 {
+        font-size: clamp(38px, 4vw, 50px);
+        line-height: 1;
+        letter-spacing: -2.5px;
+        margin-bottom: 14px;
+    }
+
+    .architecture-hero .lead {
+        max-width: 680px;
+        font-size: 14px;
+        line-height: 1.55;
+    }
+
+
+    /* =====================================================
+       Interactive Architecture Container
+    ===================================================== */
+
+    .architecture-interactive {
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+
+
+    /* =====================================================
+       Architecture Diagram
+    ===================================================== */
+
+    .architecture-diagram {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        gap: 12px;
+
+        padding: 12px 10px 16px;
+
+        overflow-x: auto;
+    }
+
+
+    /* =====================================================
+       Architecture Nodes
+    ===================================================== */
+
+    .architecture-node {
+        position: relative;
+
+        min-width: 145px;
+
+        padding: 14px 15px;
+
+        border:
+            1px solid var(--border);
+
+        border-radius: 15px;
+
+        background:
+            linear-gradient(
+                145deg,
+                rgba(17, 27, 46, 0.96),
+                rgba(10, 15, 27, 0.96)
+            );
+
+        color: var(--text);
+
+        text-align: center;
+
+        cursor: pointer;
+
+        transition:
+            transform 0.25s ease,
+            border-color 0.25s ease,
+            box-shadow 0.25s ease,
+            background 0.25s ease;
+    }
+
+    .architecture-node:hover {
+        transform:
+            translateY(-4px);
+
+        border-color:
+            rgba(139, 92, 246, 0.45);
+
+        box-shadow:
+            0 12px 30px
+            rgba(0, 0, 0, 0.25);
+    }
+
+    .architecture-node.active {
+        transform:
+            translateY(-4px);
+
+        border-color:
+            rgba(139, 92, 246, 0.7);
+
+        background:
+            linear-gradient(
+                145deg,
+                rgba(139, 92, 246, 0.15),
+                rgba(17, 27, 46, 0.96)
+            );
+
+        box-shadow:
+            0 0 28px
+            rgba(139, 92, 246, 0.13);
+    }
+
+
+    /* Small indicator showing the node is clickable */
+
+    .click-hint {
+        position: absolute;
+
+        top: 9px;
+        right: 10px;
+
+        width: 5px;
+        height: 5px;
+
+        border-radius: 50%;
+
+        background:
+            var(--purple);
+
+        opacity: 0.75;
+
+        box-shadow:
+            0 0 8px
+            rgba(139, 92, 246, 0.6);
+    }
+
+
+    .node-icon {
+        width: 42px;
+        height: 42px;
+
+        display: grid;
+        place-items: center;
+
+        margin:
+            0 auto 11px;
+
+        border-radius: 11px;
+
+        background:
+            rgba(139, 92, 246, 0.1);
+
+        color:
+            var(--purple-light);
+
+        font-size: 10px;
+
+        font-weight: 700;
+
+        letter-spacing: 0.5px;
+    }
+
+
+    .architecture-node h3 {
+        margin-bottom: 5px;
+
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+
+    .architecture-node p {
+        color:
+            var(--subtle);
+
+        font-size: 11px;
+        
+        line-height: 1.4;
+    }
+
+
+    /* =====================================================
+       Arrows
+    ===================================================== */
+
+    .architecture-arrow {
+        flex-shrink: 0;
+
+        color:
+            var(--purple-light);
+
+        font-size: 17px;
+
+        opacity: 0.7;
+    }
+
+
+    /* =====================================================
+       Information Panels
+    ===================================================== */
+
+    .architecture-details {
+        display: grid;
+
+        grid-template-columns:
+            1fr 1.35fr;
+
+        gap: 14px;
+
+        margin-top: 2px;
+    }
+
+
+    .detail-card {
+        min-height: 185px;
+
+        padding: 18px 22px;
+
+        border:
+            1px solid var(--border);
+
+        border-radius: 16px;
+
+        background:
+            rgba(13, 20, 34, 0.78);
+
+        backdrop-filter:
+            blur(15px);
+
+        transition:
+            border-color 0.25s ease;
+    }
+
+    .detail-card:hover {
+        border-color:
+            rgba(139, 92, 246, 0.22);
+    }
+
+
+    .detail-label {
+        display: inline-block;
+
+        margin-bottom: 8px;
+
+        color:
+            var(--purple-light);
+
+        font-size: 9px;
+
+        font-weight: 700;
+
+        letter-spacing: 1.5px;
+
+        text-transform: uppercase;
+    }
+
+
+    .detail-card h2 {
+        margin-bottom: 9px;
+
+        font-size: 20px;
+
+        letter-spacing: -0.5px;
+    }
+
+
+    .detail-card p {
+        color:
+            var(--muted);
+
+        font-size: 14px;
+
+        line-height: 1.55;
+    }
+
+
+    /* =====================================================
+       Detail List
+    ===================================================== */
+
+    .detail-list {
+        display: flex;
+
+        flex-direction: column;
+
+        gap: 6px;
+
+        margin-top: 13px;
+    }
+
+
+    .detail-item {
+        display: flex;
+
+        align-items: flex-start;
+
+        gap: 9px;
+
+        color:
+            var(--muted);
+
+        font-size: 13px;
+
+        line-height: 1.4;
+    }
+
+
+    .detail-item::before {
+        content: "✓";
+
+        flex-shrink: 0;
+
+        color:
+            var(--green);
+
+        font-size: 11px;
+
+        font-weight: 700;
+    }
+
+
+    /* =====================================================
+       Code Example
+    ===================================================== */
+
+    .detail-code {
+        margin-top: 14px;
+
+        padding: 14px 16px;
+
+        border:
+            1px solid var(--border);
+
+        border-radius: 9px;
+
+        background:
+            #050810;
+
+        font-family:
+            "Courier New",
+            monospace;
+
+        font-size: 11px;
+
+        line-height: 1.6;
+
+        color:
+            #cbd5e1;
+
+        overflow-x: auto;
+    }
+
+
+    .code-purple {
+        color:
+            #c4b5fd;
+    }
+
+
+    .code-blue {
+        color:
+            #7dd3fc;
+    }
+
+
+    .code-green {
+        color:
+            #6ee7b7;
+    }
+
+
+    /* =====================================================
+       Request Path
+    ===================================================== */
+
+    .flow-section {
+        margin-top: 12px;
+    }
+
+
+    .flow-title {
+        margin-bottom: 7px;
+
+        color:
+            var(--subtle);
+
+        font-size: 9px;
+
+        font-weight: 600;
+
+        letter-spacing: 1.5px;
+
+        text-transform: uppercase;
+    }
+
+
+    .flow-status {
+        display: flex;
+
+        align-items: center;
+
+        gap: 9px;
+
+        padding: 10px 14px;
+
+        border:
+            1px solid
+            rgba(52, 211, 153, 0.12);
+
+        border-radius: 9px;
+
+        background:
+            rgba(52, 211, 153, 0.04);
+
+        color:
+            var(--muted);
+
+        font-size: 11px;
+    }
+
+
+    .status-dot {
+        width: 6px;
+        height: 6px;
+
+        flex-shrink: 0;
+
+        border-radius: 50%;
+
+        background:
+            var(--green);
+
+        box-shadow:
+            0 0 9px
+            rgba(52, 211, 153, 0.6);
+
+        animation:
+            pulse 2s infinite;
+    }
+
+
+    @keyframes pulse {
+
+        0%,
+        100% {
+            opacity: 1;
+        }
+
+        50% {
+            opacity: 0.4;
+        }
+
+    }
+
+
+    /* =====================================================
+       Responsive
+    ===================================================== */
+
+    @media (max-width: 850px) {
+
+        .architecture-details {
+            grid-template-columns: 1fr;
+        }
+
+        .detail-card {
+            min-height: auto;
+        }
+
+    }
+
+
+    @media (max-width: 650px) {
+
+        .architecture-hero {
+            padding-top: 35px;
+        }
+
+        .architecture-hero h1 {
+            letter-spacing: -2px;
+        }
+
+        .architecture-diagram {
+            justify-content: flex-start;
+            padding-left: 0;
+        }
+
+        .architecture-node {
+            min-width: 125px;
+        }
+
+        .architecture-arrow {
+            font-size: 14px;
+        }
+
+        .detail-card {
+            padding: 20px;
+        }
+
+    }
+
+
+</style>
+
+<div class="architecture-page">
+
+```
+<!-- =================================================
+     HERO
+================================================= -->
+
+<section class="architecture-hero">
+
+    <div class="eyebrow">
+
+        <span class="eyebrow-dot"></span>
+
+        Interactive Architecture
+
+    </div>
+
+
+    <h1>
+
+        How the pieces
+
+        <br>
+
+        <span class="gradient">
+            fit together.
+        </span>
+
+    </h1>
+
+
+    <p class="lead">
+
+        Explore the application architecture by selecting
+        a component below.
+
+    </p>
+
+</section>
+
+
+
+<!-- =================================================
+     INTERACTIVE ARCHITECTURE
+================================================= -->
+
+<section class="architecture-interactive">
+
+
+    <!-- =================================================
+         ARCHITECTURE DIAGRAM
+    ================================================= -->
+
+    <div class="architecture-diagram">
+
+
+        <!-- Browser -->
+
+        <button
+            type="button"
+            class="architecture-node active"
+            data-component="browser"
+            onclick="showComponent('browser')"
+        >
+
+            <span class="click-hint"></span>
+
+
+            <div class="node-icon">
+                WEB
+            </div>
+
+
+            <h3>
+                Browser
+            </h3>
+
+
+            <p>
+                Client
+            </p>
+
+        </button>
+
+
+        <div class="architecture-arrow">
+            →
+        </div>
+
+
+
+        <!-- Nginx -->
+
+        <button
+            type="button"
+            class="architecture-node"
+            data-component="nginx"
+            onclick="showComponent('nginx')"
+        >
+
+            <span class="click-hint"></span>
+
+
+            <div class="node-icon">
+                NG
+            </div>
+
+
+            <h3>
+                Nginx
+            </h3>
+
+
+            <p>
+                Reverse Proxy
+            </p>
+
+        </button>
+
+
+        <div class="architecture-arrow">
+            →
+        </div>
+
+
+
+        <!-- Flask -->
+
+        <button
+            type="button"
+            class="architecture-node"
+            data-component="flask"
+            onclick="showComponent('flask')"
+        >
+
+            <span class="click-hint"></span>
+
+
+            <div class="node-icon">
+                PY
+            </div>
+
+
+            <h3>
+                Flask
+            </h3>
+
+
+            <p>
+                Web Application
+            </p>
+
+        </button>
+
+
+        <div class="architecture-arrow">
+            →
+        </div>
+
+
+
+        <!-- Redis -->
+
+        <button
+            type="button"
+            class="architecture-node"
+            data-component="redis"
+            onclick="showComponent('redis')"
+        >
+
+            <span class="click-hint"></span>
+
+
+            <div class="node-icon">
+                RD
+            </div>
+
+
+            <h3>
+                Redis
+            </h3>
+
+
+            <p>
+                Data Store
+            </p>
+
+        </button>
+
+    </div>
+
+
+
+    <!-- =================================================
+         INFORMATION PANELS
+    ================================================= -->
+
+    <div class="architecture-details">
+
+
+        <!-- Component information -->
+
+        <div class="detail-card">
+
+            <span class="detail-label">
+                Component
+            </span>
+
+
+            <h2 id="component-title">
+                Browser
+            </h2>
+
+
+            <p id="component-description">
+
+                The browser is the client that initiates
+                requests to the application and displays
+                the HTML response.
+
+            </p>
+
+
+            <div
+                class="detail-list"
+                id="component-list"
+            >
+
+                <div class="detail-item">
+                    Sends HTTP requests
+                </div>
+
+                <div class="detail-item">
+                    Displays the rendered application
+                </div>
+
+                <div class="detail-item">
+                    Receives the visitor count
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- Technical information -->
+
+        <div class="detail-card">
+
+            <span class="detail-label">
+                Technical Detail
+            </span>
+
+
+            <h2 id="technical-title">
+                HTTP Request
+            </h2>
+
+
+            <p id="technical-description">
+
+                The browser communicates with the
+                application through HTTP and receives
+                HTML responses.
+
+            </p>
+
+
+            <div
+                class="detail-code"
+                id="technical-code"
+            >
+
+                <span class="code-purple">
+                    GET
+                </span>
+
+                <span class="code-blue">
+                    /count
+                </span>
+
+                HTTP/1.1
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         REQUEST PATH
+    ================================================= -->
+
+    <div class="flow-section">
+
+        <div class="flow-title">
+            Request path
+        </div>
+
+
+        <div class="flow-status">
+
+            <span class="status-dot"></span>
+
+            Browser → Nginx → Flask → Redis
+
+        </div>
+
+    </div>
+
+
+</section>
+```
+
+</div>
+
+<!-- =====================================================
+     INTERACTIVE JAVASCRIPT
+===================================================== -->
+
+<script>
+
+    const components = {
+
+
+        /* =================================================
+           Browser
+        ================================================= */
+
+        browser: {
+
+            title: "Browser",
+
+            description:
+                "The browser is the client that initiates requests to the application and displays the HTML response.",
+
+            list: [
+                "Sends HTTP requests",
+                "Displays the rendered application",
+                "Receives the visitor count"
+            ],
+
+            technicalTitle:
+                "HTTP Request",
+
+            technicalDescription:
+                "The browser communicates with the application through HTTP and receives HTML responses.",
+
+            code:
+                `<span class="code-purple">GET</span> <span class="code-blue">/count</span> HTTP/1.1`
+
+        },
+
+
+        /* =================================================
+           Nginx
+        ================================================= */
+
+        nginx: {
+
+            title: "Nginx",
+
+            description:
+                "Nginx provides the public-facing entry point and acts as a reverse proxy in front of the Flask application.",
+
+            list: [
+                "Receives incoming HTTP requests",
+                "Forwards requests to Flask",
+                "Keeps the application service behind the proxy"
+            ],
+
+            technicalTitle:
+                "Reverse Proxy",
+
+            technicalDescription:
+                "Nginx receives the external request and forwards it to the Flask service over the Docker network.",
+
+            code:
+                `<span class="code-purple">proxy_pass</span> <span class="code-green">http://web:5001;</span>`
+
+        },
+
+
+        /* =================================================
+           Flask
+        ================================================= */
+
+        flask: {
+
+            title: "Flask",
+
+            description:
+                "Flask provides the application layer. It handles routes, communicates with Redis and renders the HTML templates.",
+
+            list: [
+                "Handles application routes",
+                "Connects to Redis",
+                "Renders Jinja templates"
+            ],
+
+            technicalTitle:
+                "Application Logic",
+
+            technicalDescription:
+                "The /count route increments the Redis visitor counter and passes the result to count.html.",
+
+            code:
+                `<span class="code-purple">visits</span> = r.incr(<span class="code-green">"visits"</span>)`
+
+        },
+
+
+        /* =================================================
+           Redis
+        ================================================= */
+
+        redis: {
+
+            title: "Redis",
+
+            description:
+                "Redis provides the data layer for the application. It stores the visitor count as a key-value pair.",
+
+            list: [
+                "Stores the visits counter",
+                "Provides the atomic INCR operation",
+                "Persists data using AOF and a Docker volume"
+            ],
+
+            technicalTitle:
+                "Atomic Counter",
+
+            technicalDescription:
+                "Redis increments the visits key atomically, allowing multiple requests to update the counter safely.",
+
+            code:
+                `<span class="code-purple">INCR</span> <span class="code-green">visits</span>`
+
+        }
+
+    };
+
+
+
+    /* =====================================================
+       Update Component Information
+    ===================================================== */
+
+    function showComponent(componentName) {
+
+
+        const component =
+            components[componentName];
+
+
+        if (!component) {
+            return;
+        }
+
+
+
+        /* Component title */
+
+        document
+            .getElementById("component-title")
+            .textContent =
+            component.title;
+
+
+
+        /* Component description */
+
+        document
+            .getElementById("component-description")
+            .textContent =
+            component.description;
+
+
+
+        /* Technical title */
+
+        document
+            .getElementById("technical-title")
+            .textContent =
+            component.technicalTitle;
+
+
+
+        /* Technical description */
+
+        document
+            .getElementById("technical-description")
+            .textContent =
+            component.technicalDescription;
+
+
+
+        /* Code example */
+
+        document
+            .getElementById("technical-code")
+            .innerHTML =
+            component.code;
+
+
+
+        /* Component list */
+
+        const list =
+            document.getElementById(
+                "component-list"
+            );
+
+
+        list.innerHTML = "";
+
+
+        component.list.forEach(item => {
+
+
+            const element =
+                document.createElement("div");
+
+
+            element.className =
+                "detail-item";
+
+
+            element.textContent =
+                item;
+
+
+            list.appendChild(element);
+
+        });
+
+
+
+        /* Remove active state */
+
+        document
+            .querySelectorAll(
+                ".architecture-node"
+            )
+            .forEach(node => {
+
+                node.classList.remove(
+                    "active"
+                );
+
+            });
+
+
+
+        /* Highlight selected node */
+
+        const selectedNode =
+            document.querySelector(
+                `[data-component="${componentName}"]`
+            );
+
+
+        if (selectedNode) {
+
+            selectedNode.classList.add(
+                "active"
+            );
+
+        }
+
+    }
+
+
+
+    /* =====================================================
+       Default Component
+    ===================================================== */
+
+    showComponent("browser");
+
+</script>
+
+{% endblock %}
+

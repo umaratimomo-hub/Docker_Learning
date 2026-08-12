@@ -1,0 +1,166 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Technology | Umar's DevOps Lab
+{% endblock %}
+
+
+{% block content %}
+
+<div class="technology-page">
+
+<style>
+
+    .technology-page .hero-small {
+        padding-top: 52px;
+        padding-bottom: 28px;
+    }
+
+    .technology-page .card {
+        min-height: 165px;
+    }
+
+</style>
+
+<section class="hero-small">
+
+    <div class="eyebrow">
+        <span class="eyebrow-dot"></span>
+        Technology Stack
+    </div>
+
+    <h1>
+        The tools behind
+        <br>
+        <span class="gradient">
+            the application.
+        </span>
+    </h1>
+
+    <p class="lead">
+        Each component has a specific responsibility
+        within the application architecture.
+    </p>
+
+</section>
+
+
+<section class="content">
+
+    <div class="cards">
+
+        <div class="card">
+
+            <div class="card-icon">
+                PY
+            </div>
+
+            <h2>
+                Python
+            </h2>
+
+            <p>
+                Provides the programming language for
+                the application and its backend logic.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-icon">
+                FL
+            </div>
+
+            <h2>
+                Flask
+            </h2>
+
+            <p>
+                Provides the lightweight web framework
+                responsible for handling HTTP requests
+                and rendering templates.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-icon">
+                RD
+            </div>
+
+            <h2>
+                Redis
+            </h2>
+
+            <p>
+                Provides fast in-memory storage and the
+                atomic INCR operation used by the counter.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-icon">
+                DK
+            </div>
+
+            <h2>
+                Docker
+            </h2>
+
+            <p>
+                Packages the application and supporting
+                services into reproducible containers.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-icon">
+                DC
+            </div>
+
+            <h2>
+                Docker Compose
+            </h2>
+
+            <p>
+                Defines and orchestrates the Flask,
+                Redis and Nginx services.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-icon">
+                NG
+            </div>
+
+            <h2>
+                Nginx
+            </h2>
+
+            <p>
+                Provides a reverse proxy and a single
+                entry point to the application.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,206 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Project | Umar's DevOps Lab
+{% endblock %}
+
+
+{% block content %}
+
+<style>
+
+    .project-page {
+        padding-bottom: 10px;
+    }
+
+    .project-page .hero-small {
+        padding-top: 50px;
+        padding-bottom: 24px;
+    }
+
+    .project-page .flow {
+        max-width: 720px;
+    }
+
+    .project-page .flow-step {
+        padding: 13px 18px;
+    }
+
+    .project-page .flow-arrow {
+        height: 12px;
+    }
+
+</style>
+
+
+<div class="project-page">
+
+    <section class="hero-small">
+
+        <div class="eyebrow">
+
+            <span class="eyebrow-dot"></span>
+
+            Project Journey
+
+        </div>
+
+
+        <h1>
+
+            From idea
+
+            <br>
+
+            <span class="gradient">
+                to container.
+            </span>
+
+        </h1>
+
+
+        <p class="lead">
+
+            A simple application used to explore
+            containerisation, service communication,
+            persistence and application infrastructure.
+
+        </p>
+
+    </section>
+
+
+    <section class="content">
+
+        <div class="flow">
+
+
+            <div class="flow-step">
+
+                <div class="flow-number">
+                    01
+                </div>
+
+                <div>
+
+                    <h3>
+                        The idea
+                    </h3>
+
+                    <p>
+                        Build a small application where Redis
+                        provides a meaningful role rather than
+                        simply running as an isolated service.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="flow-arrow"></div>
+
+
+            <div class="flow-step">
+
+                <div class="flow-number">
+                    02
+                </div>
+
+                <div>
+
+                    <h3>
+                        Application
+                    </h3>
+
+                    <p>
+                        Flask provides the web application,
+                        routes and server-side rendering.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="flow-arrow"></div>
+
+
+            <div class="flow-step">
+
+                <div class="flow-number">
+                    03
+                </div>
+
+                <div>
+
+                    <h3>
+                        Containerisation
+                    </h3>
+
+                    <p>
+                        The application and supporting services
+                        are separated into Docker containers.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="flow-arrow"></div>
+
+
+            <div class="flow-step">
+
+                <div class="flow-number">
+                    04
+                </div>
+
+                <div>
+
+                    <h3>
+                        Networking
+                    </h3>
+
+                    <p>
+                        Docker Compose provides service discovery
+                        and networking between the containers.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="flow-arrow"></div>
+
+
+            <div class="flow-step">
+
+                <div class="flow-number">
+                    05
+                </div>
+
+                <div>
+
+                    <h3>
+                        Persistence
+                    </h3>
+
+                    <p>
+                        Redis uses AOF persistence and a Docker
+                        volume to retain the visitor count.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Future Improvements | Umar's DevOps Lab
+{% endblock %}
+
+
+{% block content %}
+
+<style>
+
+    .future-page .hero-small {
+        padding-top: 52px;
+        padding-bottom: 28px;
+    }
+
+    .future-page .cards {
+        gap: 12px;
+    }
+
+    .future-page .card {
+        padding: 20px;
+    }
+
+</style>
+
+
+<div class="future-page">
+
+    <section class="hero-small">
+
+        <div class="eyebrow">
+            <span class="eyebrow-dot"></span>
+            What's Next
+        </div>
+
+        <h1>
+            Where the project
+            <br>
+            <span class="gradient">
+                could go next.
+            </span>
+        </h1>
+
+        <p class="lead">
+            The current application is intentionally simple.
+            These improvements would take it towards a more
+            production-oriented deployment.
+        </p>
+
+    </section>
+
+
+    <section class="content">
+
+        <div class="cards">
+
+            <div class="card">
+
+                <div class="card-icon">CI</div>
+
+                <h3>CI/CD Pipeline</h3>
+
+                <p>
+                    Add GitHub Actions to automatically test,
+                    build and scan the Docker images on every
+                    code change.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="card-icon">AWS</div>
+
+                <h3>Cloud Deployment</h3>
+
+                <p>
+                    Deploy the application to AWS using
+                    ECS/Fargate, ECR and an Application
+                    Load Balancer.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="card-icon">TF</div>
+
+                <h3>Infrastructure as Code</h3>
+
+                <p>
+                    Provision the cloud infrastructure using
+                    reusable Terraform modules.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="card-icon">SEC</div>
+
+                <h3>Security</h3>
+
+                <p>
+                    Add container vulnerability scanning,
+                    non-root containers and least-privilege
+                    configuration.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="card-icon">OBS</div>
+
+                <h3>Observability</h3>
+
+                <p>
+                    Add application metrics, structured logging
+                    and monitoring for the application and
+                    Redis service.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="card-icon">HA</div>
+
+                <h3>High Availability</h3>
+
+                <p>
+                    Explore scaling the application and Redis
+                    architecture to support a production
+                    workload.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</div>
+
+{% endblock %}

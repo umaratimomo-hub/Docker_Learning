@@ -1,266 +1,125 @@
-<!DOCTYPE html>
+{% extends "base.html" %}
+
+{% block title %}
+    Visitor Counter | Umar's DevOps Lab
+{% endblock %}
+
+
+{% block content %}
 
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<section class="hero-small">
+
+    <div class="eyebrow">
+        <span class="eyebrow-dot"></span>
+        Redis Counter
+    </div>
+
+    <h1>
+        Visitor
+        <br>
+        <span class="gradient">
+            activity.
+        </span>
+    </h1>
+
+    <p class="lead">
+        Each visit to this page increments a Redis-backed
+        counter using Redis's atomic INCR operation.
+    </p>
+
+</section>
+
+
+<section class="content">
+
+    <div
+        style="
+            max-width:520px;
+            margin:auto;
+            text-align:center;
+        "
+    >
+
+        <div class="card">
+
+            <p
+                style="
+                    color:#64748b;
+                    font-size:10px;
+                    text-transform:uppercase;
+                    letter-spacing:1.5px;
+                    margin-bottom:20px;
+                "
+            >
+                Total Visitors
+            </p>
+
+
+            <div
+                style="
+                    font-size:90px;
+                    line-height:1;
+                    font-weight:700;
+                    letter-spacing:-6px;
+
+                    background:
+                        linear-gradient(
+                            135deg,
+                            #ffffff,
+                            #c4b5fd,
+                            #7dd3fc
+                        );
+
+                    -webkit-background-clip:text;
+                    background-clip:text;
+
+                    color:transparent;
+
+                    margin-bottom:20px;
+                "
+            >
+                {{ visits }}
+            </div>
+
+
+            <p
+                style="
+                    color:#64748b;
+                    font-size:11px;
+                    line-height:1.6;
+                "
+            >
+                This visit has been recorded in Redis.
+            </p>
+
+
+            <div
+                style="
+                    display:inline-block;
+                    margin-top:25px;
+                    padding:7px 11px;
+
+                    border-radius:7px;
 
+                    background:
+                        rgba(220,38,38,0.08);
 
-<title>Visitor Counter | Umar's DevOps Lab</title>
+                    color:#f87171;
 
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+                    font-size:9px;
+                    font-weight:600;
 
-    * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-    }
+                    letter-spacing:1px;
+                "
+            >
+                REDIS · ACTIVE
+            </div>
 
-    body {
-        min-height: 100vh;
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        font-family: "Inter", sans-serif;
-
-        color: #f8fafc;
-
-        background:
-            radial-gradient(
-                circle at 20% 20%,
-                rgba(139, 92, 246, 0.15),
-                transparent 30%
-            ),
-            radial-gradient(
-                circle at 80% 70%,
-                rgba(56, 189, 248, 0.08),
-                transparent 30%
-            ),
-            #070b14;
-    }
-
-    body::before {
-        content: "";
-
-        position: fixed;
-        inset: 0;
-
-        pointer-events: none;
-
-        background-image:
-            linear-gradient(
-                rgba(255,255,255,0.018) 1px,
-                transparent 1px
-            ),
-            linear-gradient(
-                90deg,
-                rgba(255,255,255,0.018) 1px,
-                transparent 1px
-            );
-
-        background-size: 60px 60px;
-    }
-
-    .container {
-        width: min(520px, calc(100% - 30px));
-
-        text-align: center;
-    }
-
-    .back {
-        display: inline-block;
-
-        margin-bottom: 30px;
-
-        color: #64748b;
-
-        text-decoration: none;
-
-        font-size: 11px;
-
-        transition: color 0.2s ease;
-    }
-
-    .back:hover {
-        color: #c4b5fd;
-    }
-
-    .card {
-        position: relative;
-
-        padding: 50px 35px;
-
-        border: 1px solid
-            rgba(148, 163, 184, 0.12);
-
-        border-radius: 22px;
-
-        background:
-            linear-gradient(
-                145deg,
-                rgba(30, 41, 59, 0.7),
-                rgba(15, 23, 42, 0.8)
-            );
-
-        backdrop-filter: blur(20px);
-
-        box-shadow:
-            0 30px 80px rgba(0,0,0,0.35);
-
-        overflow: hidden;
-    }
-
-    .card::before {
-        content: "";
-
-        position: absolute;
-
-        width: 220px;
-        height: 220px;
-
-        top: -130px;
-        right: -80px;
-
-        border-radius: 50%;
-
-        background:
-            rgba(139, 92, 246, 0.12);
-
-        filter: blur(25px);
-    }
-
-    .label {
-        position: relative;
-
-        color: #94a3b8;
-
-        font-size: 11px;
-
-        text-transform: uppercase;
-
-        letter-spacing: 1.5px;
-
-        margin-bottom: 20px;
-    }
-
-    .counter {
-        position: relative;
-
-        font-size: clamp(70px, 15vw, 110px);
-
-        line-height: 1;
-
-        font-weight: 700;
-
-        letter-spacing: -6px;
-
-        background:
-            linear-gradient(
-                135deg,
-                #ffffff,
-                #c4b5fd,
-                #7dd3fc
-            );
-
-        -webkit-background-clip: text;
-        background-clip: text;
-
-        color: transparent;
-
-        margin-bottom: 18px;
-    }
-
-    .message {
-        position: relative;
-
-        color: #64748b;
-
-        font-size: 12px;
-
-        line-height: 1.6;
-    }
-
-    .redis {
-        position: relative;
-
-        display: inline-block;
-
-        margin-top: 28px;
-
-        padding: 7px 11px;
-
-        border-radius: 7px;
-
-        background:
-            rgba(220, 38, 38, 0.08);
-
-        color: #f87171;
-
-        font-size: 9px;
-
-        font-weight: 600;
-
-        letter-spacing: 1px;
-    }
-
-    .footer {
-        margin-top: 22px;
-
-        color: #475569;
-
-        font-size: 10px;
-    }
-
-    @media (max-width: 500px) {
-
-        .card {
-            padding: 40px 25px;
-        }
-    }
-</style>
-
-
-</head>
-
-<body>
-
-
-<div class="container">
-
-    <a href="/" class="back">
-        ← Back to home
-    </a>
-
-    <div class="card">
-
-        <div class="label">
-            Total Visitors
-        </div>
-
-        <div class="counter">
-            {{ visits }}
-        </div>
-
-        <div class="message">
-            This visit has been recorded in Redis.
-        </div>
-
-        <div class="redis">
-            REDIS • ACTIVE
         </div>
 
     </div>
 
-    <div class="footer">
-        Umar's DevOps Lab · Flask + Redis
-    </div>
+</section>
 
-</div>
-
-
-</body>
-</html>
+{% endblock %}
 

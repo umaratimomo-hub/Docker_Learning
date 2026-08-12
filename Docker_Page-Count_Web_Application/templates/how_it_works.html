@@ -1,0 +1,212 @@
+{% extends "base.html" %}
+
+{% block title %}
+    How It Works | Umar's DevOps Lab
+{% endblock %}
+
+
+{% block content %}
+
+<style>
+
+    .how-page .hero-small {
+        padding-top: 48px;
+        padding-bottom: 22px;
+    }
+
+    .how-page .flow-step {
+        padding: 11px 18px;
+    }
+
+    .how-page .flow-arrow {
+        height: 10px;
+    }
+
+    .how-page .code-block {
+        margin-top: 17px;
+    }
+
+</style>
+
+
+<div class="how-page">
+
+    <section class="hero-small">
+
+        <div class="eyebrow">
+            <span class="eyebrow-dot"></span>
+            Request Flow
+        </div>
+
+        <h1>
+            Follow the
+            <br>
+            <span class="gradient">
+                request.
+            </span>
+        </h1>
+
+        <p class="lead">
+            A request to the visitor counter travels through
+            the application stack before the updated value
+            is returned to the browser.
+        </p>
+
+    </section>
+
+
+    <section class="content">
+
+        <div class="flow">
+
+
+            <div class="flow-step">
+
+                <div class="flow-number">01</div>
+
+                <div>
+                    <h3>User requests /count</h3>
+
+                    <p>
+                        The browser sends an HTTP request
+                        to the visitor counter endpoint.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="flow-arrow"></div>
+
+
+            <div class="flow-step">
+
+                <div class="flow-number">02</div>
+
+                <div>
+                    <h3>Nginx receives the request</h3>
+
+                    <p>
+                        Nginx acts as the reverse proxy and
+                        forwards the request to Flask.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="flow-arrow"></div>
+
+
+            <div class="flow-step">
+
+                <div class="flow-number">03</div>
+
+                <div>
+                    <h3>Flask processes the request</h3>
+
+                    <p>
+                        Flask executes the /count route and
+                        communicates with Redis.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="flow-arrow"></div>
+
+
+            <div class="flow-step">
+
+                <div class="flow-number">04</div>
+
+                <div>
+                    <h3>Redis increments the counter</h3>
+
+                    <p>
+                        Redis atomically increments the
+                        visits key.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="flow-arrow"></div>
+
+
+            <div class="flow-step">
+
+                <div class="flow-number">05</div>
+
+                <div>
+                    <h3>Flask renders the response</h3>
+
+                    <p>
+                        The updated visitor count is passed
+                        to count.html using Jinja.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="flow-arrow"></div>
+
+
+            <div class="flow-step">
+
+                <div class="flow-number">06</div>
+
+                <div>
+                    <h3>Browser displays the count</h3>
+
+                    <p>
+                        The user sees the updated visitor
+                        count in the browser.
+                    </p>
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="code-block">
+
+            <span style="color:#8b5cf6;">
+                @app.route
+            </span>("/count")<br>
+
+            <span style="color:#8b5cf6;">
+                def
+            </span>
+            count():<br>
+
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            visits =
+            r.incr(
+            <span style="color:#a78bfa;">
+                "visits"
+            </span>
+            )<br>
+
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <span style="color:#8b5cf6;">
+                return
+            </span>
+            render_template(
+            <span style="color:#a78bfa;">
+                "count.html"
+            </span>,
+            visits=visits)
+
+        </div>
+
+    </section>
+
+</div>
+
+{% endblock %}
