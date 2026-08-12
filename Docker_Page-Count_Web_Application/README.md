@@ -86,7 +86,7 @@ Containerised the Flask application and supporting services using Docker and Doc
 #### Service Architecture
 Implemented a three-service architecture using Flask, Redis and Nginx, with services communicating through an isolated Docker network.
 
-#### Persistent Data - 
+#### Persistent Data
 Configured Redis persistence using append-only files and a Docker-managed volume to retain visitor data across container restarts.
 
 #### Reverse Proxy
