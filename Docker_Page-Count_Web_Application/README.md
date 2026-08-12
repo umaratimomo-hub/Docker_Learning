@@ -101,38 +101,38 @@ Implemented Redis's atomic INCR operation to safely maintain the visitor count a
 ---
 
 ### What I learnt
-How containers communicate through Docker Compose networking
-How Redis persistence works
-How reverse proxies sit in front of application services
-How environment variables can be used for container configuration
-How service dependencies affect container startup
-How to troubleshoot multi-container applications
+- How containers communicate through Docker Compose networking
+- How Redis persistence works
+- How reverse proxies sit in front of application services
+- How environment variables can be used for container configuration
+- How service dependencies affect container startup
+- How to troubleshoot multi-container applications
 
 ---
 
 ### Future Improvements
 
-Application
-Add a health-check endpoint such as /health
-Add a separate read endpoint for the current visitor count
-Add better error handling when Redis is unavailable
-Add automated tests for Flask routes
-Add a reset/admin endpoint protected by authentication
+#### Application
+- Add a health-check endpoint such as /health
+- Add a separate read endpoint for the current visitor count
+- Add better error handling when Redis is unavailable
+- Add automated tests for Flask routes
+- Add a reset/admin endpoint protected by authentication
 
-Docker
-Reduce image size using multi-stage builds
-Run the Flask container as a non-root user
-Add Docker health checks
-Pin image versions instead of using floating tags
-Improve container security scanning
+#### Docker
+- Reduce image size using multi-stage builds
+- Run the Flask container as a non-root user
+- Add Docker health checks
+- Pin image versions instead of using floating tags
+- Improve container security scanning
 
-CI/CD
-Introduce GitHub Actions to automatically build, test and scan Docker images on every push.
+#### CI/CD
+- Introduce GitHub Actions to automatically build, test and scan Docker images on every push.
 
-Observability
-Prometheus metrics
-Grafana dashboards
-Container health monitoring
-Centralised logging
-Redis metrics
-Application response-time monitoring
+#### Observability
+- Prometheus metrics
+- Grafana dashboards
+- Container health monitoring
+- Centralised logging
+- Redis metrics
+- Application response-time monitoring
