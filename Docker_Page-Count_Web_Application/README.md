@@ -80,22 +80,22 @@ including application information pages and Redis-backed visitor counter.*
 ---
 
 ### Key features
-Containerisation - 
+#### Containerisation
 Containerised the Flask application and supporting services using Docker and Docker Compose, creating a reproducible multi-container development environment.
 
-Service Architecture - 
+#### Service Architecture
 Implemented a three-service architecture using Flask, Redis and Nginx, with services communicating through an isolated Docker network.
 
-Persistent Data - 
+#### Persistent Data - 
 Configured Redis persistence using append-only files and a Docker-managed volume to retain visitor data across container restarts.
 
-Reverse Proxy - 
+#### Reverse Proxy
 Configured Nginx as a reverse proxy, providing a single-entry point to the application while keeping the Flask service isolated from direct external access.
 
-Configuration - 
+#### Configuration
 Used environment variables to decouple application configuration from the container image and support flexible deployment environments.
 
-Application Design - 
+#### Application Design
 Implemented Redis's atomic INCR operation to safely maintain the visitor count across requests.
 
 ---
