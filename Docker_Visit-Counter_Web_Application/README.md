@@ -139,18 +139,19 @@ Implemented Redis's atomic INCR operation to safely maintain the visitor count a
 
 
 ### Instructions to reproduce the setup
-- clone repository
+
 ```
+# clone repository
 https://github.com/umaratimomo-hub/Docker_Learning/tree/main/Docker_Page-Count_Web_Application
 ```
 
-- Enter the project folder
 ```
+# Enter the project folder
 cd Docker_Visit-Counter_Web_Application
 ```
 
-- run the containers
 ```
+# run the containers
 docker-compose up
 ```
 
