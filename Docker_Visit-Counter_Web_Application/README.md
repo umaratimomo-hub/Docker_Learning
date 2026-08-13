@@ -1,5 +1,5 @@
 # End-to-end Visit Counter Web Application
-### End-to-End deployment of a visit counter application using Docker Compose, Nginx, Flask, and Redis (for volume persistence).
+### End-to-End deployment of a visit counter application using Docker Compose, Nginx, Flask, and Redis.
 
 ---
 
