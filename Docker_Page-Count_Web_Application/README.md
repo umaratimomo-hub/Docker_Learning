@@ -136,3 +136,22 @@ Implemented Redis's atomic INCR operation to safely maintain the visitor count a
 - Centralised logging
 - Redis metrics
 - Application response-time monitoring
+
+
+### Instructions to reproduce the setup
+- clone repository
+```
+
+```
+
+- Enter the project folder
+```
+cd Docker_Page-Count_Web_Application
+```
+
+- run the containers
+```
+docker-compose up
+```
+
+- click link to view on local host browser port 5001
