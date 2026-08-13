@@ -146,7 +146,7 @@ https://github.com/umaratimomo-hub/Docker_Learning/tree/main/Docker_Page-Count_W
 
 - Enter the project folder
 ```
-cd Docker_Page-Count_Web_Application
+cd Docker_Visit-Counter_Web_Application
 ```
 
 - run the containers
